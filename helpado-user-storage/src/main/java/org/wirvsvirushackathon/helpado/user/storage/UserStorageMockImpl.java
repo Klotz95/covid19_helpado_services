@@ -72,10 +72,19 @@ public class UserStorageMockImpl implements UserStorage {
     }
 
     @Override
-    public void changeUserDescription(String userId, String newDescription) {
-        logger.debug("Changing user description of user having id {}", userId);
+    public void changeUserFirstName(String userId, String newFirstName) {
+        logger.debug("Changing user firstName of user having id {}", userId);
 
-        this.getUser(userId).ifPresentOrElse(user -> user.setDescription(newDescription), () -> {
+        this.getUser(userId).ifPresentOrElse(user -> user.setFirstName(newFirstName), () -> {
+            throw new UserNotFoundException(userId);
+        });
+    }
+
+    @Override
+    public void changeUserLastName(String userId, String newLastName) {
+        logger.debug("Changing user lastName of user having id {}", userId);
+
+        this.getUser(userId).ifPresentOrElse(user -> user.setLastName(newLastName), () -> {
             throw new UserNotFoundException(userId);
         });
     }
