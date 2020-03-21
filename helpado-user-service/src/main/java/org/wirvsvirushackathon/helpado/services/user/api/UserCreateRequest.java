@@ -18,6 +18,8 @@ public class UserCreateRequest {
     private static final String USERNAME_PARAMETER_NAME = "username";
     private static final String PASSWORD_PARAMETER_NAME = "password";
     private static final String MAIL_ADDRESS_PARAMETER_NAME = "mailAddress";
+    private static final String FIRSTNAME_PARAMETER_NAME = "firstName";
+    private static final String LASTNAME_PARAMETER_NAME = "lastName";
     private static final String DESCRIPTION_PARAMETER_NAME = "description";
     private static final String BIRTHDAY_PARAMETER_NAME = "birthday";
     private static final String USER_ADDRESS_PARAMETER_NAME = "userAddress";
@@ -28,6 +30,10 @@ public class UserCreateRequest {
     private final String password;
     @JsonProperty(MAIL_ADDRESS_PARAMETER_NAME)
     private final String mailAddress;
+    @JsonProperty(FIRSTNAME_PARAMETER_NAME)
+    private final String firstName;
+    @JsonProperty(LASTNAME_PARAMETER_NAME)
+    private final String lastName;
     @JsonProperty(DESCRIPTION_PARAMETER_NAME)
     private final String description;
     @JsonProperty(BIRTHDAY_PARAMETER_NAME)
@@ -39,12 +45,16 @@ public class UserCreateRequest {
     public UserCreateRequest(@JsonProperty(USERNAME_PARAMETER_NAME) String username,
                              @JsonProperty(PASSWORD_PARAMETER_NAME) String password,
                              @JsonProperty(MAIL_ADDRESS_PARAMETER_NAME) String mailAddress,
+                             @JsonProperty(FIRSTNAME_PARAMETER_NAME) String firstName,
+                             @JsonProperty(LASTNAME_PARAMETER_NAME) String lastName,
                              @JsonProperty(DESCRIPTION_PARAMETER_NAME) String description,
                              @JsonProperty(BIRTHDAY_PARAMETER_NAME) Date birthday,
                              @JsonProperty(USER_ADDRESS_PARAMETER_NAME) UserAddress userAddress) {
         this.username = username;
         this.password = password;
         this.mailAddress = mailAddress;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.description = description;
         this.birthday = birthday;
         this.userAddress = userAddress;
@@ -60,6 +70,13 @@ public class UserCreateRequest {
 
     public String getMailAddress() {
         return mailAddress;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLastName() {
+        return lastName;
     }
 
     public String getDescription() {
