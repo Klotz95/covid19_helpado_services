@@ -61,12 +61,20 @@ public interface UserStorage {
      void changeUserAddress(String userId, UserAddress userAddress);
 
     /**
-     * Changes the description of the {@link User}
+     * Changes the firstName of the {@link User}
      *
-     * @param userId         of the {@link User} who changes the description
-     * @param newDescription which will be saved
+     * @param userId         of the {@link User} who changes the firstName
+     * @param newFirstName which will be saved
      */
-     void changeUserDescription(String userId, String newDescription);
+     void changeUserFirstName(String userId, String newFirstName);
+
+    /**
+     * Changes the lastName of the {@link User}
+     *
+     * @param userId         of the {@link User} who changes the lastName
+     * @param newLastName which will be saved
+     */
+     void changeUserLastName(String userId, String newLastName);
 
     /**
      * Creates a user
@@ -74,12 +82,14 @@ public interface UserStorage {
      * @param username of the new user
      * @param password of the new user
      * @param mailAddress of the new user
+     * @param firstName of the new user
+     * @param lastName of the new user
      * @param description of the new user
      * @param birthday of the new user
      * @param userAddress of the new user
      *
      * @return an {@link Optional} containing the userid if the creation was successful
      */
-     Optional<String> createUser(String username, String password, String mailAddress, String description, Date birthday,
-                                       UserAddress userAddress);
+     Optional<String> createUser(String username, String password, String mailAddress, String firstName, String lastName, String description, Date birthday,
+                                 UserAddress userAddress);
 }

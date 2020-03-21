@@ -61,8 +61,8 @@ public class UserService {
     public Response createUser(UserCreateRequest createRequest) {
         logger.info("The creation of a user for email address {} has been requested", createRequest.getMailAddress());
 
-        Optional<String> createdUserId = userStorage.createUser(createRequest.getUsername(), createRequest.getPassword(),
-                createRequest.getMailAddress(), createRequest.getDescription(), createRequest.getBirthday(), createRequest.getUserAddress());
+        Optional<String> createdUserId = userStorage.createUser(createRequest.getMailAddress(), createRequest.getPassword(),
+                createRequest.getMailAddress(), createRequest.getFirstName(), createRequest.getLastName() , createRequest.getDescription(), createRequest.getBirthday(), createRequest.getUserAddress());
 
         if (createdUserId.isPresent()) {
             return Response.status(Response.Status.CREATED).entity(createdUserId.get())
@@ -76,14 +76,20 @@ public class UserService {
     @Path("/users/{userId}")
     public Response updateUser(@PathParam("userId") String userId, UserUpdateRequest updateRequest) {
         logger.info("Updating user having id {}", userId);
-        String description = updateRequest.getDescription();
+        String firstName = updateRequest.getFirstName();
+        String lastName = updateRequest.getLastName();
         UserAddress userAddress = updateRequest.getUserAddress();
         String password = updateRequest.getPassword();
 
         if (sessionManager.validateSessionToken(userId, updateRequest.getSessionToken())) {
-            if (description != null) {
-                logger.debug("Changing description of user having id {}", userId);
-                userStorage.changeUserDescription(userId, description);
+            if (firstName != null) {
+                logger.debug("Changing firstName of user having id {}", userId);
+                userStorage.changeUserFirstName(userId, firstName);
+            }
+
+            if (lastName != null) {
+                logger.debug("Changing lastName of user having id {}", userId);
+                userStorage.changeUserLastName(userId, lastName);
             }
 
             if (userAddress != null) {
@@ -115,7 +121,7 @@ public class UserService {
 
             return Response.ok(loginAnswer).build();
         }
-        logger.warn("Declined login attempt for user having id {}", userId.get());
+        logger.warn("Declined login attempt for user having email {}", loginRequest.getMailAddress());
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
 

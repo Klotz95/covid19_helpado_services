@@ -72,16 +72,25 @@ public class UserStorageMockImpl implements UserStorage {
     }
 
     @Override
-    public void changeUserDescription(String userId, String newDescription) {
-        logger.debug("Changing user description of user having id {}", userId);
+    public void changeUserFirstName(String userId, String newFirstName) {
+        logger.debug("Changing user firstName of user having id {}", userId);
 
-        this.getUser(userId).ifPresentOrElse(user -> user.setDescription(newDescription), () -> {
+        this.getUser(userId).ifPresentOrElse(user -> user.setFirstName(newFirstName), () -> {
             throw new UserNotFoundException(userId);
         });
     }
 
     @Override
-    public Optional<String> createUser(String username, String password, String mailAddress, String description, Date birthday,
+    public void changeUserLastName(String userId, String newLastName) {
+        logger.debug("Changing user lastName of user having id {}", userId);
+
+        this.getUser(userId).ifPresentOrElse(user -> user.setLastName(newLastName), () -> {
+            throw new UserNotFoundException(userId);
+        });
+    }
+
+    @Override
+    public Optional<String> createUser(String username, String password, String mailAddress, String firstName, String lastName, String description, Date birthday,
                                        UserAddress userAddress) {
        String uuid = UUID.randomUUID().toString();
 
@@ -89,6 +98,8 @@ public class UserStorageMockImpl implements UserStorage {
        newUser.setDescription(description);
        newUser.setUserAddress(userAddress);
        newUser.setPassword(password);
+       newUser.setFirstName(firstName);
+       newUser.setLastName(lastName);
        newUser.setBirthday(birthday);
        newUser.setMailAddress(mailAddress);
        newUser.setUserId(uuid);
@@ -106,8 +117,8 @@ public class UserStorageMockImpl implements UserStorage {
     private ViewUser convertToViewUser(User user) {
         ViewUser res = new ViewUser();
 
-        res.setBirthday(user.getBirthday());
-        res.setDescription(user.getDescription());
+        res.setLastName(user.getLastName());
+        res.setFirstName(user.getFirstName());
         res.setUserId(user.getUserId());
         res.setUsername(user.getUsername());
 

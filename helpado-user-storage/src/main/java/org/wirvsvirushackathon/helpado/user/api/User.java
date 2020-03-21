@@ -13,6 +13,8 @@ public class User {
 
     private String userId;
     private String username;
+    private String firstName;
+    private String lastName;
     private String password;
     private String mailAddress;
     private String description;
@@ -22,12 +24,14 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String username, String password, String mailAddress, String description, Date birthday,
+    public User(String userId, String username, String password, String mailAddress, String firstName, String lastName, String description, Date birthday,
                 UserAddress userAddress) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.mailAddress = mailAddress;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.description = description;
         this.birthday = birthday;
         this.userAddress = userAddress;
@@ -63,6 +67,22 @@ public class User {
 
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getDescription() {

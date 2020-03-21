@@ -14,17 +14,17 @@ public class ViewUser {
 
     private static final String USER_ID_PARAMETER_NAME = "userId";
     private static final String USERNAME_PARAMETER_NAME = "username";
-    private static final String DESCRIPTION_PARAMETER_NAME = "description";
-    private static final String BIRTHDAY_PARAMETER_NAME = "birthday";
+    private static final String FIRSTNAME_PARAMETER_NAME = "firstName";
+    private static final String LASTNAME_PARAMETER_NAME = "lastName";
 
     @JsonProperty(USER_ID_PARAMETER_NAME)
     private String userId;
     @JsonProperty(USERNAME_PARAMETER_NAME)
     private String username;
-    @JsonProperty(DESCRIPTION_PARAMETER_NAME)
-    private String description;
-    @JsonProperty(BIRTHDAY_PARAMETER_NAME)
-    private Date birthday;
+    @JsonProperty(FIRSTNAME_PARAMETER_NAME)
+    private String firstName;
+    @JsonProperty(LASTNAME_PARAMETER_NAME)
+    private String lastName;
 
     public String getUserId() {
         return userId;
@@ -42,19 +42,19 @@ public class ViewUser {
         this.username = username;
     }
 
-    public String getDescription() {
-        return description;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
