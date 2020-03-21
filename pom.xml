@@ -11,7 +11,13 @@
     <modules>
         <module>helpado-user-storage</module>
         <module>helpado-user-service</module>
+        <module>helpado-service-starter</module>
     </modules>
+
+    <properties>
+        <maven.compiler.target>1.14</maven.compiler.target>
+        <maven.compiler.source>1.14</maven.compiler.source>
+    </properties>
 
     <dependencies>
         <dependency>
