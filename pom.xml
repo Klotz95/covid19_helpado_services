@@ -11,6 +11,8 @@
     <modules>
         <module>helpado-user-storage</module>
         <module>helpado-user-service</module>
+        <module>helpado-order-storage</module>
+        <module>helpado-order-service</module>
         <module>helpado-service-starter</module>
         <module>helpado-utils</module>
     </modules>

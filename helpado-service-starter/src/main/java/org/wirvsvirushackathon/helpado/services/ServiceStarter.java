@@ -5,6 +5,9 @@ import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wirvsvirushackathon.helpado.order.storage.OrderStorage;
+import org.wirvsvirushackathon.helpado.order.storage.OrderStorageMockImpl;
+import org.wirvsvirushackathon.helpado.services.order.OrderService;
 import org.wirvsvirushackathon.helpado.services.user.UserService;
 import org.wirvsvirushackathon.helpado.session.SessionManager;
 import org.wirvsvirushackathon.helpado.session.SessionManagerImpl;
@@ -43,6 +46,10 @@ public class ServiceStarter extends Application<ServiceConfiguration> {
         UserService userService = new UserService(userStorage,sessionManager);
 
         environment.jersey().register(userService);
+
+        OrderStorage orderStorage = new OrderStorageMockImpl();
+        OrderService orderService = new OrderService(orderStorage);
+        environment.jersey().register(orderService);
     }
 
     private void configureCors(Environment environment) {
