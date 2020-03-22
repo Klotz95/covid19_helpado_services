@@ -2,10 +2,7 @@ package org.wirvsvirushackathon.helpado.services.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wirvsvirushackathon.helpado.services.user.api.LoginAnswer;
-import org.wirvsvirushackathon.helpado.services.user.api.LoginRequest;
-import org.wirvsvirushackathon.helpado.services.user.api.UserCreateRequest;
-import org.wirvsvirushackathon.helpado.services.user.api.UserUpdateRequest;
+import org.wirvsvirushackathon.helpado.services.user.api.*;
 import org.wirvsvirushackathon.helpado.session.SessionManager;
 import org.wirvsvirushackathon.helpado.user.api.UserAddress;
 import org.wirvsvirushackathon.helpado.user.api.ViewUser;
@@ -65,7 +62,8 @@ public class UserService {
                 createRequest.getMailAddress(), createRequest.getFirstName(), createRequest.getLastName() , createRequest.getDescription(), createRequest.getBirthday(), createRequest.getUserAddress());
 
         if (createdUserId.isPresent()) {
-            return Response.status(Response.Status.CREATED).entity(createdUserId.get())
+            UserCreateResponse userCreateResponse = new UserCreateResponse(createdUserId.get());
+            return Response.status(Response.Status.CREATED).entity(userCreateResponse)
                     .build();
         } else {
             return Response.status(Response.Status.NOT_MODIFIED).build();
@@ -117,9 +115,9 @@ public class UserService {
             logger.debug("Login user having id {}", userId.get());
             //password was correct. Generate session token and send it to frontend
             String sessionToken = sessionManager.generateSessionToken(userId.get());
-            LoginAnswer loginAnswer = new LoginAnswer(sessionToken, userId.get());
+            LoginResponse loginResponse = new LoginResponse(sessionToken, userId.get());
 
-            return Response.ok(loginAnswer).build();
+            return Response.ok(loginResponse).build();
         }
         logger.warn("Declined login attempt for user having email {}", loginRequest.getMailAddress());
         return Response.status(Response.Status.UNAUTHORIZED).build();
