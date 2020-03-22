@@ -7,7 +7,6 @@ import org.wirvsvirushackathon.helpado.order.api.OrderItem;
 import org.wirvsvirushackathon.helpado.order.storage.OrderStorage;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateRequest;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateResponse;
-import org.wirvsvirushackathon.helpado.services.order.api.OrderPatchRequest;
 import org.wirvsvirushackathon.helpado.session.SessionManager;
 
 import javax.ws.rs.*;
@@ -64,12 +63,11 @@ public class OrderService {
     }
 
     @PATCH
-    @Path("/orders")
-    public Response patchOrderAsCreator(OrderPatchRequest orderPatchRequest) {
+    @Path("/orders/{orderId}")
+    public Response patchOrderAsCreator(@PathParam("orderId") String orderId, OrderCreateRequest orderPatchRequest) {
         String userId = orderPatchRequest.getUserId();
         List<OrderItem> orderedItems = orderPatchRequest.getOrderedItems();
         String sessionToken = orderPatchRequest.getSessionToken();
-        String orderId = orderPatchRequest.getOrderId();
         Date latestDeliveryWished = orderPatchRequest.getLatestDeliveryWished();
         String orderType = orderPatchRequest.getOrderType();
         Float budget = orderPatchRequest.getBudget();
