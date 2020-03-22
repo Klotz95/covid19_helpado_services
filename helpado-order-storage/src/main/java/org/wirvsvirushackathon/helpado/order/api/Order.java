@@ -2,7 +2,6 @@ package org.wirvsvirushackathon.helpado.order.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +17,6 @@ public class Order {
     private static final String ASSIGNED_TO_USER_ID_PARAMETER_NAME = "assignedToUserId";
     private static final String BUDGET_PARAMETER_NAME = "budget";
     private static final String STATE_PARAMETER_NAME = "state";
-    private static final String DESCRIPTION_PARAMETER_NAME = "description";
 
     @JsonProperty(ORDER_ID_PARAMETER_NAME)
     private String orderId;
@@ -38,8 +36,6 @@ public class Order {
     private Float budget;
     @JsonProperty(STATE_PARAMETER_NAME)
     private OrderState state;
-    @JsonProperty(DESCRIPTION_PARAMETER_NAME)
-    private String description;
 
     public Order() {
     }
@@ -53,8 +49,7 @@ public class Order {
                  @JsonProperty(CREATED_BY_USER_ID_PARAMETER_NAME) String createdByUserId,
                  @JsonProperty(ASSIGNED_TO_USER_ID_PARAMETER_NAME) String assignedToUserId,
                  @JsonProperty(BUDGET_PARAMETER_NAME) Float budget,
-                 @JsonProperty(STATE_PARAMETER_NAME) OrderState state,
-                 @JsonProperty(DESCRIPTION_PARAMETER_NAME)String description) {
+                 @JsonProperty(STATE_PARAMETER_NAME) OrderState state) {
         this.orderId = orderId;
         this.orderedItems = orderedItems;
         this.latestDeliveryWished = latestDeliveryWished;
@@ -64,7 +59,6 @@ public class Order {
         this.assignedToUserId = assignedToUserId;
         this.budget = budget;
         this.state = state;
-        this.description = description;
     }
 
     public String getOrderId() {
@@ -82,7 +76,6 @@ public class Order {
     public void setOrderedItems(List<OrderItem> orderedItems) {
         this.orderedItems = orderedItems;
     }
-
 
 
     public Date getLatestDeliveryWished() {
@@ -139,9 +132,5 @@ public class Order {
 
     public void setState(OrderState state) {
         this.state = state;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }
