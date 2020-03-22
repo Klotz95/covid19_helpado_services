@@ -2,10 +2,12 @@ package org.wirvsvirushackathon.helpado.order.storage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wirvsvirushackathon.helpado.order.api.OrderItem;
 import org.wirvsvirushackathon.helpado.order.api.Order;
+import org.wirvsvirushackathon.helpado.order.api.OrderItem;
 import org.wirvsvirushackathon.helpado.order.api.OrderState;
 
+import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.NotFoundException;
 import java.util.*;
 
 public class OrderStorageMockImpl implements OrderStorage {
@@ -15,22 +17,23 @@ public class OrderStorageMockImpl implements OrderStorage {
     private final List<Order> storedOrders;
 
     public OrderStorageMockImpl() {
-        storedOrders = new ArrayList<>();
+        storedOrders = Collections.synchronizedList(new ArrayList<>());
     }
 
     @Override
-    public Optional<List<Order>> getAllOrders() {
-        return Optional.of(storedOrders);
+    public List<Order> getAllOrders() {
+        return storedOrders;
     }
 
     @Override
-    public Optional<String> createOrder(List<OrderItem> orderedItems, Boolean premiumProducts, Date latestDeliveryWished, String createdByUserId) {
+    public Optional<String> createOrder(List<OrderItem> orderedItems, Date latestDeliveryWished, String createdByUserId, String orderType, Float budget) {
         String uuid = UUID.randomUUID().toString();
 
         Order newOrder = new Order();
         newOrder.setOrderId(uuid);
         newOrder.setOrderedItems(orderedItems);
-        newOrder.setPremiumProducts(premiumProducts);
+        newOrder.setOrderType(orderType);
+        newOrder.setBudget(budget);
         newOrder.setLatestDeliveryWished(latestDeliveryWished);
         newOrder.setCreatedByUserId(createdByUserId);
         newOrder.setCreatedAt(new Date());
@@ -38,5 +41,65 @@ public class OrderStorageMockImpl implements OrderStorage {
 
         this.storedOrders.add(newOrder);
         return Optional.of(uuid);
+    }
+
+    @Override
+    public Optional<Order> getOrderById(String orderId) {
+        return storedOrders.stream().filter(order -> order.getOrderId()
+                .equals(orderId)).findFirst();
+    }
+
+    @Override
+    public void updateLatestDeliveryWishedOfOrder(String orderId, String userId, Date latestDeliveryWished) {
+        Order orderToBeChanged = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        orderToBeChanged.setLatestDeliveryWished(latestDeliveryWished);
+    }
+
+    @Override
+    public void updateBudgetOfOrder(String orderId, String userId, float budget) {
+        Order orderToBeChanged = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        orderToBeChanged.setBudget(budget);
+    }
+
+    @Override
+    public void updateTypeOfOrder(String orderId, String userId, String orderType) {
+        Order orderToBeChanged = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        orderToBeChanged.setOrderType(orderType);
+    }
+
+    @Override
+    public void updateItemListOfOrder(String orderId, String userId, List<OrderItem> orderItems) {
+        Order orderToBeChanged = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        orderToBeChanged.setOrderedItems(orderItems);
+    }
+
+    @Override
+    public void updateAssignedToOfOrder(String orderId, String assignedToUserId) {
+
+    }
+
+    @Override
+    public void updateEstimatedDeliveryAtOfOrder(String orderId, Date estimatedDelivery) {
+
+    }
+
+    @Override
+    public void deleteOrder(String orderId, String userId) {
+        Order orderToBeDeleted = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        storedOrders.remove(orderToBeDeleted);
+    }
+
+    private Order getOrderToBeChangedWithCreatorAuthorization(String orderId, String userId) {
+        Optional<Order> orderToBeChanged = getOrderById(orderId);
+
+        if(orderToBeChanged.isEmpty()) {
+            throw new NotFoundException();
+        }
+
+        if(!orderToBeChanged.get().getCreatedByUserId().equals(userId)){
+            throw new ForbiddenException();
+        }
+
+        return orderToBeChanged.get();
     }
 }

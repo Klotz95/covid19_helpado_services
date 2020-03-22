@@ -32,7 +32,6 @@ public class ServiceStarter extends Application<ServiceConfiguration> {
 
     private static final Logger logger = LoggerFactory.getLogger(ServiceStarter.class);
 
-
     public static void main(String[] args) throws Exception {
         new ServiceStarter().run(args);
     }
@@ -48,7 +47,7 @@ public class ServiceStarter extends Application<ServiceConfiguration> {
         environment.jersey().register(userService);
 
         OrderStorage orderStorage = new OrderStorageMockImpl();
-        OrderService orderService = new OrderService(orderStorage);
+        OrderService orderService = new OrderService(orderStorage, sessionManager);
         environment.jersey().register(orderService);
     }
 

@@ -1,27 +1,62 @@
 package org.wirvsvirushackathon.helpado.order.api;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.List;
 
 public class Order {
+
+    private static final String ORDER_ID_PARAMETER_NAME = "orderId";
+    private static final String ORDERED_ITEMS_PARAMETER_NAME = "orderedItems";
+    private static final String ORDER_TYPE_PARAMETER_NAME = "orderType";
+    private static final String LATEST_DELIVERY_WISHED_PARAMETER_NAME = "latestDeliveryWished";
+    private static final String ESTIMATED_DELIVERY_AT_PARAMETER_NAME = "estimatedDeliveryAt";
+    private static final String CREATED_AT_PARAMETER_NAME = "createdAt";
+    private static final String CREATED_BY_USER_ID_PARAMETER_NAME = "createdByUserId";
+    private static final String ASSIGNED_TO_USER_ID_PARAMETER_NAME = "assignedToUserId";
+    private static final String BUDGET_PARAMETER_NAME = "budget";
+    private static final String STATE_PARAMETER_NAME = "state";
+
+    @JsonProperty(ORDER_ID_PARAMETER_NAME)
     private String orderId;
+    @JsonProperty(ORDERED_ITEMS_PARAMETER_NAME)
     private List<OrderItem> orderedItems;
-    private Boolean premiumProducts;
+    @JsonProperty(ORDER_TYPE_PARAMETER_NAME)
+    private String orderType;
+    @JsonProperty(LATEST_DELIVERY_WISHED_PARAMETER_NAME)
     private Date latestDeliveryWished;
+    @JsonProperty(ESTIMATED_DELIVERY_AT_PARAMETER_NAME)
     private Date estimatedDeliveryAt;
+    @JsonProperty(CREATED_AT_PARAMETER_NAME)
     private Date createdAt;
+    @JsonProperty(CREATED_BY_USER_ID_PARAMETER_NAME)
     private String createdByUserId;
+    @JsonProperty(ASSIGNED_TO_USER_ID_PARAMETER_NAME)
     private String assignedToUserId;
+    @JsonProperty(BUDGET_PARAMETER_NAME)
     private Float budget;
+    @JsonProperty(STATE_PARAMETER_NAME)
     private OrderState state;
 
     public Order() {
     }
 
-    public Order(String orderId, List<OrderItem> orderedItems, Boolean premiumProducts, Date latestDeliveryWished, Date estimatedDeliveryAt, Date createdAt, String createdByUserId, String assignedToUserId, Float budget, OrderState state) {
+    @JsonCreator
+    public Order(@JsonProperty(ORDER_ID_PARAMETER_NAME) String orderId,
+                 @JsonProperty(ORDERED_ITEMS_PARAMETER_NAME) List<OrderItem> orderedItems,
+                 @JsonProperty(ORDER_TYPE_PARAMETER_NAME) String orderType,
+                 @JsonProperty(LATEST_DELIVERY_WISHED_PARAMETER_NAME) Date latestDeliveryWished,
+                 @JsonProperty(ESTIMATED_DELIVERY_AT_PARAMETER_NAME) Date estimatedDeliveryAt,
+                 @JsonProperty(CREATED_AT_PARAMETER_NAME) Date createdAt,
+                 @JsonProperty(CREATED_BY_USER_ID_PARAMETER_NAME) String createdByUserId,
+                 @JsonProperty(ASSIGNED_TO_USER_ID_PARAMETER_NAME) String assignedToUserId,
+                 @JsonProperty(BUDGET_PARAMETER_NAME) Float budget,
+                 @JsonProperty(STATE_PARAMETER_NAME) OrderState state) {
         this.orderId = orderId;
         this.orderedItems = orderedItems;
-        this.premiumProducts = premiumProducts;
+        this.orderType = orderType;
         this.latestDeliveryWished = latestDeliveryWished;
         this.estimatedDeliveryAt = estimatedDeliveryAt;
         this.createdAt = createdAt;
@@ -45,14 +80,6 @@ public class Order {
 
     public void setOrderedItems(List<OrderItem> orderedItems) {
         this.orderedItems = orderedItems;
-    }
-
-    public Boolean getPremiumProducts() {
-        return premiumProducts;
-    }
-
-    public void setPremiumProducts(Boolean premiumProducts) {
-        this.premiumProducts = premiumProducts;
     }
 
     public Date getLatestDeliveryWished() {
@@ -109,5 +136,13 @@ public class Order {
 
     public void setState(OrderState state) {
         this.state = state;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
     }
 }
