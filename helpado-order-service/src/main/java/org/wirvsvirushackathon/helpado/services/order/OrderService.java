@@ -6,6 +6,7 @@ import org.wirvsvirushackathon.helpado.order.api.Order;
 import org.wirvsvirushackathon.helpado.order.storage.OrderStorage;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateRequest;
 import org.wirvsvirushackathon.helpado.session.SessionManager;
+import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -50,11 +51,11 @@ public class OrderService {
                     orderCreateRequest.getUserId()
             );
             if (createdOrderId.isPresent()) {
-                return Response.status(Response.Status.CREATED).entity(createdOrderId.get()).build();
+                OrderCreateResponse orderCreateResponse = new OrderCreateResponse(createdOrderId.get());
+            return Response.status(Response.Status.CREATED).entity(orderCreateResponse).build();
             } else {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
-
         }
 
         logger.warn("Unauthorized order creation request by user having id {}", orderCreateRequest.getUserId());
