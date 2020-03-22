@@ -15,6 +15,8 @@
         <module>helpado-order-service</module>
         <module>helpado-service-starter</module>
         <module>helpado-utils</module>
+        <module>helpado-chat-service</module>
+        <module>helpado-chat-storage</module>
     </modules>
 
     <properties>
