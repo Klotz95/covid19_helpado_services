@@ -3,14 +3,17 @@ package org.wirvsvirushackathon.helpado.services.order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wirvsvirushackathon.helpado.order.api.Order;
+import org.wirvsvirushackathon.helpado.order.api.OrderItem;
 import org.wirvsvirushackathon.helpado.order.storage.OrderStorage;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateRequest;
-import org.wirvsvirushackathon.helpado.session.SessionManager;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateResponse;
+import org.wirvsvirushackathon.helpado.services.order.api.OrderPatchRequest;
+import org.wirvsvirushackathon.helpado.session.SessionManager;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +52,7 @@ public class OrderService {
             );
             if (createdOrderId.isPresent()) {
                 OrderCreateResponse orderCreateResponse = new OrderCreateResponse(createdOrderId.get());
-            return Response.status(Response.Status.CREATED).entity(orderCreateResponse).build();
+                return Response.status(Response.Status.CREATED).entity(orderCreateResponse).build();
             } else {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
@@ -57,6 +60,33 @@ public class OrderService {
 
         logger.warn("Unauthorized order creation request by user having id {}", orderCreateRequest.getUserId());
         throw new ForbiddenException();
+    }
+
+    @PATCH
+    @Path("/orders")
+    public Response patchOrderAsCreator(OrderPatchRequest orderPatchRequest) {
+        String userId = orderPatchRequest.getUserId();
+        List<OrderItem> orderedItems = orderPatchRequest.getOrderedItems();
+        String sessionToken = orderPatchRequest.getSessionToken();
+        String orderId = orderPatchRequest.getOrderId();
+        Date latestDeliveryWished = orderPatchRequest.getLatestDeliveryWished();
+
+        logger.info("The patch of an order has been requested by user having id {}", userId);
+
+        if (!sessionManager.validateSessionToken(userId, sessionToken)) {
+            logger.warn("Unauthorized order patch request by user having id {}", userId);
+            throw new ForbiddenException();
+        }
+
+        if (orderedItems != null) {
+            orderStorage.updateItemListOfOrder(orderId, userId, orderedItems);
+        }
+
+        if (latestDeliveryWished != null) {
+            orderStorage.updateLatestDeliveryWishedOfOrder(orderId, userId, latestDeliveryWished);
+        }
+
+        return Response.status(Response.Status.OK).build();
     }
 
     @GET

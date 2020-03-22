@@ -2,10 +2,12 @@ package org.wirvsvirushackathon.helpado.order.storage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wirvsvirushackathon.helpado.order.api.OrderItem;
 import org.wirvsvirushackathon.helpado.order.api.Order;
+import org.wirvsvirushackathon.helpado.order.api.OrderItem;
 import org.wirvsvirushackathon.helpado.order.api.OrderState;
 
+import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.NotFoundException;
 import java.util.*;
 
 public class OrderStorageMockImpl implements OrderStorage {
@@ -40,28 +42,27 @@ public class OrderStorageMockImpl implements OrderStorage {
     }
 
     @Override
-    public Optional<Order> getOrderById(String id) {
-        return Optional.empty();
+    public Optional<Order> getOrderById(String orderId) {
+        return storedOrders.stream().filter(order -> order.getOrderId()
+                .equals(orderId)).findFirst();
     }
 
     @Override
-    public void updateLatestDeliveryWishedOfOrder(String orderId, Date latestDeliveryWished) {
-
+    public void updateLatestDeliveryWishedOfOrder(String orderId, String userId, Date latestDeliveryWished) {
+        Order orderToBeChanged = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        orderToBeChanged.setLatestDeliveryWished(latestDeliveryWished);
     }
 
     @Override
-    public void updateDescriptionOfOrder(String orderId, String description) {
-
+    public void updateBudgetOfOrder(String orderId, String userId, float budget) {
+        Order orderToBeChanged = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        orderToBeChanged.setBudget(budget);
     }
 
     @Override
-    public void updateBudgetOfOrder(String orderId, float budget) {
-
-    }
-
-    @Override
-    public void updateItemListOfOrder(String orderId, List<OrderItem> orderItems) {
-
+    public void updateItemListOfOrder(String orderId, String userId, List<OrderItem> orderItems) {
+        Order orderToBeChanged = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        orderToBeChanged.setOrderedItems(orderItems);
     }
 
     @Override
@@ -72,5 +73,19 @@ public class OrderStorageMockImpl implements OrderStorage {
     @Override
     public void updateEstimatedDeliveryAtOfOrder(String orderId, Date estimatedDelivery) {
 
+    }
+
+    private Order getOrderToBeChangedWithCreatorAuthorization(String orderId, String userId) {
+        Optional<Order> orderToBeChanged = getOrderById(orderId);
+
+        if(orderToBeChanged.isEmpty()) {
+            throw new NotFoundException();
+        }
+
+        if(!orderToBeChanged.get().getCreatedByUserId().equals(userId)){
+            throw new ForbiddenException();
+        }
+
+        return orderToBeChanged.get();
     }
 }

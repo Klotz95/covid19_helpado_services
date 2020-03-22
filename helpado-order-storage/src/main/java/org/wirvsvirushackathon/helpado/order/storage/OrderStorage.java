@@ -38,33 +38,27 @@ public interface OrderStorage {
 
     /**
      * Update the latest delivery wished parameter of the {@link Order} having the specified id
-     *
-     * @param orderId of the {@link Order} wish delivery wished parameter need to get changed
+     *  @param orderId of the {@link Order} wish delivery wished parameter need to get changed
+     * @param userId
      * @param latestDeliveryWished which should be set to the {@link Order}
      */
-    void updateLatestDeliveryWishedOfOrder(String orderId, Date latestDeliveryWished);
-
-    /**
-     * Updates the description information of the {@link Order} having the specified id
-     * @param orderId of the {@link Order} which description should get changed
-     * @param description which should be saved for the {@link Order}
-     */
-    void updateDescriptionOfOrder(String orderId, String description);
+    void updateLatestDeliveryWishedOfOrder(String orderId, String userId, Date latestDeliveryWished);
 
     /**
      * Updates the budget information of the {@link Order} having the specified id
-     *
-     * @param orderId of the {@link Order} which budget should get changed
+     *  @param orderId of the {@link Order} which budget should get changed
+     * @param userId
      * @param budget which should be saved for the {@link Order}
      */
-    void updateBudgetOfOrder(String orderId, float budget);
+    void updateBudgetOfOrder(String orderId, String userId, float budget);
 
     /**
      * Updates the item list of the {@link Order} having the specified id
      * @param orderId of the {@link Order} which item list should get changed
+     * @param userId of the user who wants to change the order
      * @param orderItems which should be saved for the {@link Order}
      */
-    void updateItemListOfOrder(String orderId, List<OrderItem> orderItems);
+    void updateItemListOfOrder(String orderId, String userId, List<OrderItem> orderItems);
 
     /**
      * Updates the assigned to of the {@link Order} having the specified id
