@@ -25,8 +25,7 @@ public class UserStorageMockImpl implements UserStorage {
     public Optional<String> checkCredentials(String email, String password) {
         logger.debug("Checking credentials of user having email {}", email);
 
-        Optional<User> currentUser = storedUsers.stream().filter(user -> user.getMailAddress()
-                .equals(email)).findFirst();
+        Optional<User> currentUser = getUserByEmail(email);
 
         if (currentUser.isPresent()) {
             if (currentUser.get().getPassword().equals(password)) {
@@ -37,6 +36,12 @@ public class UserStorageMockImpl implements UserStorage {
         } else {
             throw new UserMailNotFoundException(email);
         }
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return storedUsers.stream().filter(user -> user.getMailAddress()
+                .equals(email)).findFirst();
     }
 
     @Override

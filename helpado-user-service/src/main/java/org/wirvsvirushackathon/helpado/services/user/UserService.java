@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wirvsvirushackathon.helpado.services.user.api.*;
 import org.wirvsvirushackathon.helpado.session.SessionManager;
+import org.wirvsvirushackathon.helpado.user.api.User;
 import org.wirvsvirushackathon.helpado.user.api.UserAddress;
 import org.wirvsvirushackathon.helpado.user.api.ViewUser;
 import org.wirvsvirushackathon.helpado.user.storage.UserStorage;
@@ -62,6 +63,12 @@ public class UserService {
     @Path("/users")
     public Response createUser(UserCreateRequest createRequest) {
         logger.info("The creation of a user for email address {} has been requested", createRequest.getMailAddress());
+
+        Optional<User> userWithSameEmail = userStorage.getUserByEmail(createRequest.getMailAddress());
+
+        if(userWithSameEmail.isPresent()) {
+            return Response.status(Response.Status.FORBIDDEN).entity("Account with this email already exists.").build();
+        }
 
         Optional<String> createdUserId = userStorage.createUser(createRequest.getPassword(),
                 createRequest.getMailAddress(), createRequest.getFirstName(), createRequest.getLastName(), createRequest.getUserAddress());

@@ -25,7 +25,9 @@ public interface UserStorage {
      * @param password of the user who wants to login
      * @return an {@link Optional} containing the userId if the login was successful
      */
-     Optional<String> checkCredentials(String email, String password);
+    Optional<String> checkCredentials(String email, String password);
+
+    Optional<User> getUserByEmail(String email);
 
     /**
      * Returns the {@link User} having the specified id if existing
@@ -57,35 +59,34 @@ public interface UserStorage {
      * @param userId      of the {@link User} who change the address
      * @param userAddress which will be saved
      */
-     void changeUserAddress(String userId, UserAddress userAddress);
+    void changeUserAddress(String userId, UserAddress userAddress);
 
     /**
      * Changes the firstName of the {@link User}
      *
-     * @param userId         of the {@link User} who changes the firstName
+     * @param userId       of the {@link User} who changes the firstName
      * @param newFirstName which will be saved
      */
-     void changeUserFirstName(String userId, String newFirstName);
+    void changeUserFirstName(String userId, String newFirstName);
 
     /**
      * Changes the lastName of the {@link User}
      *
-     * @param userId         of the {@link User} who changes the lastName
+     * @param userId      of the {@link User} who changes the lastName
      * @param newLastName which will be saved
      */
-     void changeUserLastName(String userId, String newLastName);
+    void changeUserLastName(String userId, String newLastName);
 
     /**
      * Creates a user
      *
-     * @param password of the new user
+     * @param password    of the new user
      * @param mailAddress of the new user
-     * @param firstName of the new user
-     * @param lastName of the new user
+     * @param firstName   of the new user
+     * @param lastName    of the new user
      * @param userAddress of the new user
-     *
      * @return an {@link Optional} containing the userid if the creation was successful
      */
-     Optional<String> createUser(String password, String mailAddress, String firstName, String lastName,
-                                 UserAddress userAddress);
+    Optional<String> createUser(String password, String mailAddress, String firstName, String lastName,
+                                UserAddress userAddress);
 }
