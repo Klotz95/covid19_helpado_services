@@ -107,7 +107,7 @@ public class UserService {
                 userStorage.changeUserAddress(userId, userAddress);
             }
 
-            if (password != null) {
+            if (password != null && password.length() > 0) {
                 logger.debug("Changing password of user having id {}", userId);
                 userStorage.changeUserPassword(userId, password);
             }
