@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author NKO (NicoKotlenga@live.de)
  * @since 21.03.2020
  */
-public class LoginAnswer {
+public class LoginResponse {
 
     private static final String SESSION_TOKEN_PARAMETER_NAME = "sessionToken";
     private static final String USER_ID_PARAMETER_NAME = "userId";
@@ -21,8 +21,8 @@ public class LoginAnswer {
     private final String userId;
 
     @JsonCreator
-    public LoginAnswer(@JsonProperty(SESSION_TOKEN_PARAMETER_NAME)String sessionToken,
-                       @JsonProperty(USER_ID_PARAMETER_NAME)String userId){
+    public LoginResponse(@JsonProperty(SESSION_TOKEN_PARAMETER_NAME)String sessionToken,
+                         @JsonProperty(USER_ID_PARAMETER_NAME)String userId){
         this.sessionToken = sessionToken;
         this.userId = userId;
     }
