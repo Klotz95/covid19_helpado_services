@@ -1,30 +1,17 @@
 package org.wirvsvirushackathon.helpado.order.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.UUID;
 
 public class OrderItem {
-    private static final String NAME_PARAMETER_NAME = "name";
-    private static final String QUANTITY_PARAMETER_NAME = "quantity";
-    private static final String COMMENT_PARAMETER_NAME = "comment";
-
-    @JsonProperty(NAME_PARAMETER_NAME)
+    private final String orderItemId;
     private String name;
-    @JsonProperty(QUANTITY_PARAMETER_NAME)
     private String quantity;
-    @JsonProperty(COMMENT_PARAMETER_NAME)
     private String comment;
+    private Boolean checked;
 
     public OrderItem() {
-    }
-
-    public OrderItem(
-            String name,
-            String quantity,
-            String comment
-    ) {
-        this.name = name;
-        this.quantity = quantity;
-        this.comment = comment;
+        this.orderItemId = UUID.randomUUID().toString();
+        this.checked = false;
     }
 
     public String getName() {
@@ -49,5 +36,17 @@ public class OrderItem {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getOrderItemId() {
+        return orderItemId;
+    }
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
     }
 }
