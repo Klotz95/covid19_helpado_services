@@ -2,7 +2,7 @@ package org.wirvsvirushackathon.helpado.services.user.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.wirvsvirushackathon.helpado.user.api.UserAddress;
+import org.wirvsvirushackathon.helpado.user.api.Address;
 
 import java.util.Date;
 
@@ -39,7 +39,7 @@ public class UserCreateRequest {
     @JsonProperty(BIRTHDAY_PARAMETER_NAME)
     private final Date birthday;
     @JsonProperty(USER_ADDRESS_PARAMETER_NAME)
-    private final UserAddress userAddress;
+    private final Address address;
 
     @JsonCreator
     public UserCreateRequest(@JsonProperty(USERNAME_PARAMETER_NAME) String username,
@@ -49,7 +49,7 @@ public class UserCreateRequest {
                              @JsonProperty(LASTNAME_PARAMETER_NAME) String lastName,
                              @JsonProperty(DESCRIPTION_PARAMETER_NAME) String description,
                              @JsonProperty(BIRTHDAY_PARAMETER_NAME) Date birthday,
-                             @JsonProperty(USER_ADDRESS_PARAMETER_NAME) UserAddress userAddress) {
+                             @JsonProperty(USER_ADDRESS_PARAMETER_NAME) Address address) {
         this.username = username;
         this.password = password;
         this.mailAddress = mailAddress;
@@ -57,7 +57,7 @@ public class UserCreateRequest {
         this.lastName = lastName;
         this.description = description;
         this.birthday = birthday;
-        this.userAddress = userAddress;
+        this.address = address;
     }
 
     public String getUsername() {
@@ -88,8 +88,8 @@ public class UserCreateRequest {
         return birthday;
     }
 
-    public UserAddress getUserAddress() {
-        return userAddress;
+    public Address getAddress() {
+        return address;
     }
 
 }

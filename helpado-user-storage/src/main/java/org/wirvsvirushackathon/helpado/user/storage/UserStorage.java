@@ -2,7 +2,7 @@ package org.wirvsvirushackathon.helpado.user.storage;
 
 import org.jvnet.hk2.annotations.Service;
 import org.wirvsvirushackathon.helpado.user.api.User;
-import org.wirvsvirushackathon.helpado.user.api.UserAddress;
+import org.wirvsvirushackathon.helpado.user.api.Address;
 import org.wirvsvirushackathon.helpado.user.api.ViewUser;
 
 import java.util.Optional;
@@ -57,9 +57,9 @@ public interface UserStorage {
      * Changes the address of the {@link User}
      *
      * @param userId      of the {@link User} who change the address
-     * @param userAddress which will be saved
+     * @param address which will be saved
      */
-    void changeUserAddress(String userId, UserAddress userAddress);
+    void changeUserAddress(String userId, Address address);
 
     /**
      * Changes the firstName of the {@link User}
@@ -84,9 +84,9 @@ public interface UserStorage {
      * @param mailAddress of the new user
      * @param firstName   of the new user
      * @param lastName    of the new user
-     * @param userAddress of the new user
+     * @param address of the new user
      * @return an {@link Optional} containing the userid if the creation was successful
      */
     Optional<String> createUser(String password, String mailAddress, String firstName, String lastName,
-                                UserAddress userAddress);
+                                Address address);
 }

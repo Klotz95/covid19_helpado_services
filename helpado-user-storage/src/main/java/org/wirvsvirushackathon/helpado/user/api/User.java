@@ -1,7 +1,5 @@
 package org.wirvsvirushackathon.helpado.user.api;
 
-import java.util.Date;
-
 /**
  * This class describes the basic structure of a user used by the
  * {@link org.wirvsvirushackathon.helpado.user.storage.UserStorage}
@@ -16,18 +14,18 @@ public class User {
     private String lastName;
     private String password;
     private String mailAddress;
-    private UserAddress userAddress;
+    private Address address;
 
     public User() {
     }
 
-    public User(String userId, String password, String mailAddress, String firstName, String lastName, UserAddress userAddress) {
+    public User(String userId, String password, String mailAddress, String firstName, String lastName, Address address) {
         this.userId = userId;
         this.password = password;
         this.mailAddress = mailAddress;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userAddress = userAddress;
+        this.address = address;
     }
 
     public String getUserId() {
@@ -70,11 +68,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public UserAddress getUserAddress() {
-        return userAddress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setUserAddress(UserAddress userAddress) {
-        this.userAddress = userAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

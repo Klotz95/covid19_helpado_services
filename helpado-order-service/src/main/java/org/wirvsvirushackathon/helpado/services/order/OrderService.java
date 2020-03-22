@@ -118,7 +118,7 @@ public class OrderService {
 
     private OrderWithAddress addAddressToOrder(Order order) {
         return this.userStorage.getUser(order.getCreatedByUserId())
-                .map(user -> new OrderWithAddress(order, user.getUserAddress()))
+                .map(user -> new OrderWithAddress(order, user.getAddress()))
                 .orElseGet(() -> new OrderWithAddress(order, null));
     }
 

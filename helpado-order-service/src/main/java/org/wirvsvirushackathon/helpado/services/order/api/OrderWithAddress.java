@@ -3,25 +3,25 @@ package org.wirvsvirushackathon.helpado.services.order.api;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.wirvsvirushackathon.helpado.order.api.Order;
-import org.wirvsvirushackathon.helpado.user.api.UserAddress;
+import org.wirvsvirushackathon.helpado.user.api.Address;
 
 public class OrderWithAddress extends Order {
     private static final String USER_ADDRESS_PARAMETER_NAME = "address";
 
     @JsonProperty(USER_ADDRESS_PARAMETER_NAME)
-    private UserAddress userAddress;
+    private Address address;
 
     @JsonCreator
-    public OrderWithAddress(Order order, UserAddress userAddress) {
+    public OrderWithAddress(Order order, Address address) {
         super(order);
-        this.userAddress = userAddress;
+        this.address = address;
     }
 
-    public UserAddress getUserAddress() {
-        return userAddress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setUserAddress(UserAddress userAddress) {
-        this.userAddress = userAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

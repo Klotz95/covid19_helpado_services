@@ -1,7 +1,7 @@
 package org.wirvsvirushackathon.helpado.services.user.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.wirvsvirushackathon.helpado.user.api.UserAddress;
+import org.wirvsvirushackathon.helpado.user.api.Address;
 
 /**
  * This class describes the structure of a update request to change user information
@@ -24,19 +24,19 @@ public class UserUpdateRequest {
     @JsonProperty(LASTNAME_PARAMETER_NAME)
     private final String lastName;
     @JsonProperty(ADDRESS_PARAMETER_NAME)
-    private final UserAddress userAddress;
+    private final Address address;
     @JsonProperty(SESSION_TOKEN_PARAMETER_NAME)
     private final String sessionToken;
 
     public UserUpdateRequest(@JsonProperty(PASSWORD_PARAMETER_NAME) String password,
                              @JsonProperty(FIRSTNAME_PARAMETER_NAME) String firstName,
                              @JsonProperty(LASTNAME_PARAMETER_NAME) String lastName,
-                             @JsonProperty(ADDRESS_PARAMETER_NAME) UserAddress userAddress,
+                             @JsonProperty(ADDRESS_PARAMETER_NAME) Address address,
                              @JsonProperty(SESSION_TOKEN_PARAMETER_NAME) String sessionToken) {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userAddress = userAddress;
+        this.address = address;
         this.sessionToken = sessionToken;
     }
 
@@ -52,8 +52,8 @@ public class UserUpdateRequest {
         return lastName;
     }
 
-    public UserAddress getUserAddress() {
-        return userAddress;
+    public Address getAddress() {
+        return address;
     }
 
     public String getSessionToken() {

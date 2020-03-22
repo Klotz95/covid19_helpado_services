@@ -1,7 +1,5 @@
 package org.wirvsvirushackathon.helpado.user.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * This class represents the structure of the objects represented at the frontend
  *
@@ -10,22 +8,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ViewUser {
 
-    private static final String USER_ID_PARAMETER_NAME = "userId";
-    private static final String MAIL_ADDRESS_PARAMETER_NAME = "mailAddress";
-    private static final String FIRSTNAME_PARAMETER_NAME = "firstName";
-    private static final String LASTNAME_PARAMETER_NAME = "lastName";
-    private static final String USER_ADDRESS_PARAMETER_NAME = "address";
-
-    @JsonProperty(USER_ID_PARAMETER_NAME)
     private String userId;
-    @JsonProperty(MAIL_ADDRESS_PARAMETER_NAME)
     private String mailAddress;
-    @JsonProperty(FIRSTNAME_PARAMETER_NAME)
     private String firstName;
-    @JsonProperty(LASTNAME_PARAMETER_NAME)
     private String lastName;
-    @JsonProperty(USER_ADDRESS_PARAMETER_NAME)
-    private UserAddress userAddress;
+    private Address address;
+
+    public ViewUser() {
+    }
+
+    public ViewUser(User user) {
+        this.userId = user.getUserId();
+        this.mailAddress = user.getMailAddress();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.address = user.getAddress();
+    }
 
     public String getUserId() {
         return userId;
@@ -59,11 +57,11 @@ public class ViewUser {
         this.lastName = lastName;
     }
 
-    public UserAddress getUserAddress() {
-        return userAddress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setUserAddress(UserAddress userAddress) {
-        this.userAddress = userAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

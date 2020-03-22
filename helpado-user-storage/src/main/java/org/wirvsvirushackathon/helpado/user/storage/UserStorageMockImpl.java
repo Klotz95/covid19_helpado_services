@@ -3,7 +3,7 @@ package org.wirvsvirushackathon.helpado.user.storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wirvsvirushackathon.helpado.user.api.User;
-import org.wirvsvirushackathon.helpado.user.api.UserAddress;
+import org.wirvsvirushackathon.helpado.user.api.Address;
 import org.wirvsvirushackathon.helpado.user.api.ViewUser;
 import org.wirvsvirushackathon.helpado.user.exceptions.UserMailNotFoundException;
 import org.wirvsvirushackathon.helpado.user.exceptions.UserNotFoundException;
@@ -68,10 +68,10 @@ public class UserStorageMockImpl implements UserStorage {
     }
 
     @Override
-    public void changeUserAddress(String userId, UserAddress userAddress) {
+    public void changeUserAddress(String userId, Address address) {
         logger.debug("Changing address of user having id {}", userId);
 
-        this.getUser(userId).ifPresentOrElse(user -> user.setUserAddress(userAddress), () -> {
+        this.getUser(userId).ifPresentOrElse(user -> user.setAddress(address), () -> {
             throw new UserNotFoundException(userId);
         });
     }
@@ -96,11 +96,11 @@ public class UserStorageMockImpl implements UserStorage {
 
     @Override
     public Optional<String> createUser(String password, String mailAddress, String firstName, String lastName,
-                                       UserAddress userAddress) {
+                                       Address address) {
         String uuid = UUID.randomUUID().toString();
 
         User newUser = new User();
-        newUser.setUserAddress(userAddress);
+        newUser.setAddress(address);
         newUser.setPassword(password);
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
@@ -123,7 +123,7 @@ public class UserStorageMockImpl implements UserStorage {
         res.setFirstName(user.getFirstName());
         res.setUserId(user.getUserId());
         res.setMailAddress(user.getMailAddress());
-        res.setUserAddress(user.getUserAddress());
+        res.setAddress(user.getAddress());
 
         return res;
     }

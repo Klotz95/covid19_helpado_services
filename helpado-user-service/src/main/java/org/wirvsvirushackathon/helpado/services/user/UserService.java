@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wirvsvirushackathon.helpado.services.user.api.*;
 import org.wirvsvirushackathon.helpado.session.SessionManager;
+import org.wirvsvirushackathon.helpado.user.api.Address;
 import org.wirvsvirushackathon.helpado.user.api.User;
-import org.wirvsvirushackathon.helpado.user.api.UserAddress;
 import org.wirvsvirushackathon.helpado.user.api.ViewUser;
 import org.wirvsvirushackathon.helpado.user.storage.UserStorage;
 
@@ -66,12 +66,12 @@ public class UserService {
 
         Optional<User> userWithSameEmail = userStorage.getUserByEmail(createRequest.getMailAddress());
 
-        if(userWithSameEmail.isPresent()) {
+        if (userWithSameEmail.isPresent()) {
             return Response.status(Response.Status.FORBIDDEN).entity("Account with this email already exists.").build();
         }
 
         Optional<String> createdUserId = userStorage.createUser(createRequest.getPassword(),
-                createRequest.getMailAddress(), createRequest.getFirstName(), createRequest.getLastName(), createRequest.getUserAddress());
+                createRequest.getMailAddress(), createRequest.getFirstName(), createRequest.getLastName(), createRequest.getAddress());
 
         if (createdUserId.isPresent()) {
             UserCreateResponse userCreateResponse = new UserCreateResponse(createdUserId.get());
@@ -88,7 +88,7 @@ public class UserService {
         logger.info("Updating user having id {}", userId);
         String firstName = updateRequest.getFirstName();
         String lastName = updateRequest.getLastName();
-        UserAddress userAddress = updateRequest.getUserAddress();
+        Address address = updateRequest.getAddress();
         String password = updateRequest.getPassword();
 
         if (sessionManager.validateSessionToken(userId, updateRequest.getSessionToken())) {
@@ -102,9 +102,9 @@ public class UserService {
                 userStorage.changeUserLastName(userId, lastName);
             }
 
-            if (userAddress != null) {
+            if (address != null) {
                 logger.debug("Changing address information of user having id {}", userId);
-                userStorage.changeUserAddress(userId, userAddress);
+                userStorage.changeUserAddress(userId, address);
             }
 
             if (password != null && password.length() > 0) {
@@ -124,12 +124,16 @@ public class UserService {
         Optional<String> userId = userStorage.checkCredentials(loginRequest.getMailAddress(), loginRequest.getPassword());
 
         if (userId.isPresent()) {
-            logger.debug("Login user having id {}", userId.get());
-            //password was correct. Generate session token and send it to frontend
-            String sessionToken = sessionManager.generateSessionToken(userId.get());
-            LoginResponse loginResponse = new LoginResponse(sessionToken, userId.get());
+            Optional<User> user = userStorage.getUser(userId.get());
 
-            return Response.ok(loginResponse).build();
+            if (user.isPresent()) {
+                logger.debug("Login user having id {}", userId.get());
+                //password was correct. Generate session token and send it to frontend
+                String sessionToken = sessionManager.generateSessionToken(userId.get());
+                LoginResponse loginResponse = new LoginResponse(sessionToken, user.get());
+
+                return Response.ok(loginResponse).build();
+            }
         }
         logger.warn("Declined login attempt for user having email {}", loginRequest.getMailAddress());
         return Response.status(Response.Status.UNAUTHORIZED).build();

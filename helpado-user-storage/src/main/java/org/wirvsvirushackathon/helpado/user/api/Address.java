@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author NKO (NicoKotlenga@live.de)
  * @since 21.03.2020
  */
-public class UserAddress {
+public class Address {
 
     private static final String POSTAL_CODE_PARAMETER_NAME = "postalCode";
     private static final String CITY_PARAMETER_NAME = "city";
@@ -23,7 +23,7 @@ public class UserAddress {
     private String street;
 
     @JsonCreator
-    public UserAddress(
+    public Address(
             @JsonProperty(POSTAL_CODE_PARAMETER_NAME) String postalCode,
             @JsonProperty(CITY_PARAMETER_NAME) String city,
             @JsonProperty(STREET_PARAMETER_NAME) String street) {
