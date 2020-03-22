@@ -48,8 +48,9 @@ public class OrderService {
             Optional<String> createdOrderId = orderStorage.createOrder(
                     orderCreateRequest.getOrderedItems(),
                     orderCreateRequest.getLatestDeliveryWished(),
-                    orderCreateRequest.getUserId()
-            );
+                    orderCreateRequest.getUserId(),
+                    orderCreateRequest.getOrderType(),
+                    orderCreateRequest.getBudget());
             if (createdOrderId.isPresent()) {
                 OrderCreateResponse orderCreateResponse = new OrderCreateResponse(createdOrderId.get());
                 return Response.status(Response.Status.CREATED).entity(orderCreateResponse).build();
@@ -70,6 +71,8 @@ public class OrderService {
         String sessionToken = orderPatchRequest.getSessionToken();
         String orderId = orderPatchRequest.getOrderId();
         Date latestDeliveryWished = orderPatchRequest.getLatestDeliveryWished();
+        String orderType = orderPatchRequest.getOrderType();
+        Float budget = orderPatchRequest.getBudget();
 
         logger.info("The patch of an order has been requested by user having id {}", userId);
 
@@ -80,6 +83,14 @@ public class OrderService {
 
         if (orderedItems != null) {
             orderStorage.updateItemListOfOrder(orderId, userId, orderedItems);
+        }
+
+        if (orderType != null) {
+            orderStorage.updateTypeOfOrder(orderId, userId, orderType);
+        }
+
+        if (budget != null) {
+            orderStorage.updateBudgetOfOrder(orderId, userId, budget);
         }
 
         if (latestDeliveryWished != null) {

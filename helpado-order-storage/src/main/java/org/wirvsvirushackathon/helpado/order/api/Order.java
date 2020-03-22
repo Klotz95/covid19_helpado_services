@@ -10,6 +10,7 @@ public class Order {
 
     private static final String ORDER_ID_PARAMETER_NAME = "orderId";
     private static final String ORDERED_ITEMS_PARAMETER_NAME = "orderedItems";
+    private static final String ORDER_TYPE_PARAMETER_NAME = "orderType";
     private static final String LATEST_DELIVERY_WISHED_PARAMETER_NAME = "latestDeliveryWished";
     private static final String ESTIMATED_DELIVERY_AT_PARAMETER_NAME = "estimatedDeliveryAt";
     private static final String CREATED_AT_PARAMETER_NAME = "createdAt";
@@ -22,6 +23,8 @@ public class Order {
     private String orderId;
     @JsonProperty(ORDERED_ITEMS_PARAMETER_NAME)
     private List<OrderItem> orderedItems;
+    @JsonProperty(ORDER_TYPE_PARAMETER_NAME)
+    private String orderType;
     @JsonProperty(LATEST_DELIVERY_WISHED_PARAMETER_NAME)
     private Date latestDeliveryWished;
     @JsonProperty(ESTIMATED_DELIVERY_AT_PARAMETER_NAME)
@@ -43,6 +46,7 @@ public class Order {
     @JsonCreator
     public Order(@JsonProperty(ORDER_ID_PARAMETER_NAME) String orderId,
                  @JsonProperty(ORDERED_ITEMS_PARAMETER_NAME) List<OrderItem> orderedItems,
+                 @JsonProperty(ORDER_TYPE_PARAMETER_NAME) String orderType,
                  @JsonProperty(LATEST_DELIVERY_WISHED_PARAMETER_NAME) Date latestDeliveryWished,
                  @JsonProperty(ESTIMATED_DELIVERY_AT_PARAMETER_NAME) Date estimatedDeliveryAt,
                  @JsonProperty(CREATED_AT_PARAMETER_NAME) Date createdAt,
@@ -52,6 +56,7 @@ public class Order {
                  @JsonProperty(STATE_PARAMETER_NAME) OrderState state) {
         this.orderId = orderId;
         this.orderedItems = orderedItems;
+        this.orderType = orderType;
         this.latestDeliveryWished = latestDeliveryWished;
         this.estimatedDeliveryAt = estimatedDeliveryAt;
         this.createdAt = createdAt;
@@ -76,7 +81,6 @@ public class Order {
     public void setOrderedItems(List<OrderItem> orderedItems) {
         this.orderedItems = orderedItems;
     }
-
 
     public Date getLatestDeliveryWished() {
         return latestDeliveryWished;
@@ -132,5 +136,13 @@ public class Order {
 
     public void setState(OrderState state) {
         this.state = state;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
     }
 }

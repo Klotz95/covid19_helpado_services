@@ -23,9 +23,11 @@ public interface OrderStorage {
      * @param latestDeliveryWished of the {@link org.eclipse.jetty.server.Authentication.User} who created the order
      * @param createdByUserId contains the id of the user who creates this {@link Order}
      *
+     * @param orderType
+     * @param budget
      * @return the order ID
      */
-    Optional<String> createOrder(List<OrderItem> orderedItems, Date latestDeliveryWished, String createdByUserId);
+    Optional<String> createOrder(List<OrderItem> orderedItems, Date latestDeliveryWished, String createdByUserId, String orderType, Float budget);
 
     /**
      * Returns the {@link Order} having the specified id
@@ -39,7 +41,7 @@ public interface OrderStorage {
     /**
      * Update the latest delivery wished parameter of the {@link Order} having the specified id
      *  @param orderId of the {@link Order} wish delivery wished parameter need to get changed
-     * @param userId
+     * @param userId of the user who wants to change the order
      * @param latestDeliveryWished which should be set to the {@link Order}
      */
     void updateLatestDeliveryWishedOfOrder(String orderId, String userId, Date latestDeliveryWished);
@@ -47,10 +49,18 @@ public interface OrderStorage {
     /**
      * Updates the budget information of the {@link Order} having the specified id
      *  @param orderId of the {@link Order} which budget should get changed
-     * @param userId
+     * @param userId of the user who wants to change the order
      * @param budget which should be saved for the {@link Order}
      */
     void updateBudgetOfOrder(String orderId, String userId, float budget);
+
+    /**
+     * Updates the type information of the {@link Order} having the specified id
+     *  @param orderId of the {@link Order} which type should get changed
+     * @param userId of the user who wants to change the order
+     * @param type which should be saved for the {@link Order}
+     */
+    void updateTypeOfOrder(String orderId, String userId, String type);
 
     /**
      * Updates the item list of the {@link Order} having the specified id
@@ -64,7 +74,7 @@ public interface OrderStorage {
      * Updates the assigned to of the {@link Order} having the specified id
      *
      * @param orderId of the {@link Order} which assignedTo should get changed
-     * @param assignedToUserId
+     * @param assignedToUserId user to be assigned
      */
     void updateAssignedToOfOrder(String orderId, String assignedToUserId);
 

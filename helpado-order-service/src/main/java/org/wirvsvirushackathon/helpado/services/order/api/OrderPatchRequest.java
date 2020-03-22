@@ -14,6 +14,8 @@ public class OrderPatchRequest extends OrderCreateRequest {
     private static final String PREMIUM_PRODUCTS_PARAMETER_NAME = "premiumProducts";
     private static final String LATEST_DELIVERY_WISHED_PARAMETER_NAME = "latestDeliveryWished";
     private static final String SESSION_TOKEN_PARAMETER_NAME = "sessionToken";
+    private static final String ORDER_TYPE_PARAMETER_NAME = "orderType";
+    private static final String BUDGET_PARAMETER_NAME = "budget";
 
     @JsonProperty(ORDER_ID_PARAMETER_NAME)
     private final String orderId;
@@ -25,8 +27,10 @@ public class OrderPatchRequest extends OrderCreateRequest {
             @JsonProperty(LATEST_DELIVERY_WISHED_PARAMETER_NAME) Date latestDeliveryWished,
             @JsonProperty(SESSION_TOKEN_PARAMETER_NAME) String sessionToken,
             @JsonProperty(USER_ID_PARAMETER_NAME) String userId,
+            @JsonProperty(BUDGET_PARAMETER_NAME) Float budget,
+            @JsonProperty(ORDER_TYPE_PARAMETER_NAME) String orderType,
             @JsonProperty(ORDER_ID_PARAMETER_NAME) String orderId) {
-        super(orderedItems, premiumProducts, latestDeliveryWished, sessionToken, userId);
+        super(orderedItems, premiumProducts, latestDeliveryWished, sessionToken, userId, budget, orderType);
         this.orderId = orderId;
     }
 

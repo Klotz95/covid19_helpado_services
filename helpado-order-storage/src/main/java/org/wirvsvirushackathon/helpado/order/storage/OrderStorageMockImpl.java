@@ -26,12 +26,14 @@ public class OrderStorageMockImpl implements OrderStorage {
     }
 
     @Override
-    public Optional<String> createOrder(List<OrderItem> orderedItems, Date latestDeliveryWished, String createdByUserId) {
+    public Optional<String> createOrder(List<OrderItem> orderedItems, Date latestDeliveryWished, String createdByUserId, String orderType, Float budget) {
         String uuid = UUID.randomUUID().toString();
 
         Order newOrder = new Order();
         newOrder.setOrderId(uuid);
         newOrder.setOrderedItems(orderedItems);
+        newOrder.setOrderType(orderType);
+        newOrder.setBudget(budget);
         newOrder.setLatestDeliveryWished(latestDeliveryWished);
         newOrder.setCreatedByUserId(createdByUserId);
         newOrder.setCreatedAt(new Date());
@@ -57,6 +59,12 @@ public class OrderStorageMockImpl implements OrderStorage {
     public void updateBudgetOfOrder(String orderId, String userId, float budget) {
         Order orderToBeChanged = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
         orderToBeChanged.setBudget(budget);
+    }
+
+    @Override
+    public void updateTypeOfOrder(String orderId, String userId, String orderType) {
+        Order orderToBeChanged = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        orderToBeChanged.setOrderType(orderType);
     }
 
     @Override
