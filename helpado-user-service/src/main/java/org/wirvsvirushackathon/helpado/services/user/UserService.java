@@ -42,8 +42,13 @@ public class UserService {
 
     @GET
     @Path("/users/{userId}")
-    public ViewUser getUserInformation(@PathParam("userId") String userId) {
+    public ViewUser getUserInformation(@PathParam("userId") String userId, @HeaderParam("sessionToken") String sessionToken) {
         logger.debug("view-information of user having id {} has been requested", userId);
+
+        if (!sessionManager.validateSessionToken(userId, sessionToken)) {
+            throw new ForbiddenException();
+        }
+
         Optional<ViewUser> viewUser = userStorage.getViewUser(userId);
 
         if (viewUser.isPresent()) {
@@ -59,7 +64,7 @@ public class UserService {
         logger.info("The creation of a user for email address {} has been requested", createRequest.getMailAddress());
 
         Optional<String> createdUserId = userStorage.createUser(createRequest.getPassword(),
-                createRequest.getMailAddress(), createRequest.getFirstName(), createRequest.getLastName() , createRequest.getUserAddress());
+                createRequest.getMailAddress(), createRequest.getFirstName(), createRequest.getLastName(), createRequest.getUserAddress());
 
         if (createdUserId.isPresent()) {
             UserCreateResponse userCreateResponse = new UserCreateResponse(createdUserId.get());

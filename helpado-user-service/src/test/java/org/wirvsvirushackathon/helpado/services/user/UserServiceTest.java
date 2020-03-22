@@ -49,6 +49,6 @@ public class UserServiceTest {
         when(userStorage.getViewUser(anyString())).thenReturn(Optional.of(testUser));
 
 
-        Assertions.assertEquals("test", userService.getUserInformation("test"));
+        Assertions.assertEquals("test", userService.getUserInformation("test", "token"));
     }
 }
