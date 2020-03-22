@@ -15,30 +15,25 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.1</version>
-
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>org.wirvsvirushackathon.helpado.services.ServiceStarter</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.2</version>
                 <executions>
                     <execution>
-                        <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>org.wirvsvirushackathon.helpado.services.ServiceStarter</Main-Class>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                        </configuration>
                     </execution>
                 </executions>
-
             </plugin>
         </plugins>
     </build>
