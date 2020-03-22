@@ -1,29 +1,30 @@
-package org.wirvsvirushackathon.order.api;
+package org.wirvsvirushackathon.helpado.order.api;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OrderItem {
-    private String orderItemId;
+    private static final String NAME_PARAMETER_NAME = "name";
+    private static final String QUANTITY_PARAMETER_NAME = "quantity";
+    private static final String COMMENT_PARAMETER_NAME = "comment";
+
+    @JsonProperty(NAME_PARAMETER_NAME)
     private String name;
+    @JsonProperty(QUANTITY_PARAMETER_NAME)
     private String quantity;
+    @JsonProperty(COMMENT_PARAMETER_NAME)
     private String comment;
 
+    public OrderItem() {
+    }
+
     public OrderItem(
-            String orderItemId,
             String name,
             String quantity,
             String comment
     ) {
-        this.orderItemId = orderItemId;
         this.name = name;
         this.quantity = quantity;
         this.comment = comment;
-    }
-
-    public String getOrderItemId() {
-        return orderItemId;
-    }
-
-    public void setOrderItemId(String orderItemId) {
-        this.orderItemId = orderItemId;
     }
 
     public String getName() {

@@ -1,10 +1,10 @@
-package org.wirvsvirushackathon.order.storage;
+package org.wirvsvirushackathon.helpado.order.storage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wirvsvirushackathon.order.api.Order;
-import org.wirvsvirushackathon.order.api.OrderItem;
-import org.wirvsvirushackathon.order.api.OrderState;
+import org.wirvsvirushackathon.helpado.order.api.OrderItem;
+import org.wirvsvirushackathon.helpado.order.api.Order;
+import org.wirvsvirushackathon.helpado.order.api.OrderState;
 
 import java.util.*;
 
@@ -24,7 +24,7 @@ public class OrderStorageMockImpl implements OrderStorage {
     }
 
     @Override
-    public Optional<String> createOrder(List<OrderItem> orderedItems, Boolean premiumProducts, Date latestDeliveryWished, Date createdAt, String createdByUserId) {
+    public Optional<String> createOrder(List<OrderItem> orderedItems, Boolean premiumProducts, Date latestDeliveryWished, String createdByUserId) {
         String uuid = UUID.randomUUID().toString();
 
         Order newOrder = new Order();
@@ -32,7 +32,6 @@ public class OrderStorageMockImpl implements OrderStorage {
         newOrder.setOrderedItems(orderedItems);
         newOrder.setPremiumProducts(premiumProducts);
         newOrder.setLatestDeliveryWished(latestDeliveryWished);
-        newOrder.setCreatedAt(createdAt);
         newOrder.setCreatedByUserId(createdByUserId);
         newOrder.setCreatedAt(new Date());
         newOrder.setState(OrderState.OPEN);

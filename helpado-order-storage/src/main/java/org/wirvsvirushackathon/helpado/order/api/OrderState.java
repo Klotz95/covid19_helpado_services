@@ -1,4 +1,4 @@
-package org.wirvsvirushackathon.order.api;
+package org.wirvsvirushackathon.helpado.order.api;
 
 public enum OrderState {
     OPEN,
