@@ -26,7 +26,7 @@ public class Chat {
     @JsonProperty(LAST_MESSAGE_ID_PARAMETER_NAME)
     private String lastMessageId;
     @JsonProperty(ORDER_ID_PARAMETER_NAME)
-    private String oderId;
+    private String orderId;
 
     public String getChatId() {
         return chatId;
@@ -60,11 +60,11 @@ public class Chat {
         this.lastMessageId = lastMessageId;
     }
 
-    public String getOderId() {
-        return oderId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setOderId(String oderId) {
-        this.oderId = oderId;
+    public void setOrderId(String oderId) {
+        this.orderId = oderId;
     }
 }

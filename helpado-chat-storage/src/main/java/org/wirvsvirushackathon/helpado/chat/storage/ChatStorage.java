@@ -16,11 +16,12 @@ public interface ChatStorage {
      * Generates a new chat. Returns the id of the chat if the creation was successful
      *
      * @param orderId for which the chat will be generated
+     * @param paticipantAId of the chat
      * @param participantBId of the chat
      *
      * @return an {@link Optional} containing the id of the chat
      */
-    Optional<String> createChat(String orderId, String participantBId);
+    Optional<String> createChat(String orderId, String paticipantAId, String participantBId);
 
     /**
      * Deletes the specified chat
@@ -45,4 +46,12 @@ public interface ChatStorage {
      * if present
      */
     Optional<Chat> getChatByChatId(String chatId);
+
+    /**
+     * Updates the id of the last message of a {@link Chat}
+     *
+     * @param chatId for which the id of the last message should be updated
+     * @param lastMessageId which should be set
+     */
+    void updateLastMessageId(String chatId, String lastMessageId);
 }
