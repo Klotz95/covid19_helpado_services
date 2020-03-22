@@ -32,7 +32,6 @@ public class ServiceStarter extends Application<ServiceConfiguration> {
 
     private static final Logger logger = LoggerFactory.getLogger(ServiceStarter.class);
 
-
     public static void main(String[] args) throws Exception {
         new ServiceStarter().run(args);
     }

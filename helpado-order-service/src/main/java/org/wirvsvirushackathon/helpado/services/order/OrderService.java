@@ -32,8 +32,6 @@ public class OrderService {
      * This REST-call can be used to create a order
      * Before creating the order a validation with the {@link org.wirvsvirushackathon.helpado.session.SessionManager}
      * will take place
-     * <p>
-     * TODO: Frontend need to send the userId inside the request
      *
      * @param orderCreateRequest send by the frontend
      * @return a status code {@link Response} which will be send to the frontend
