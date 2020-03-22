@@ -23,8 +23,8 @@ public interface OrderStorage {
      * @param latestDeliveryWished of the {@link org.eclipse.jetty.server.Authentication.User} who created the order
      * @param createdByUserId contains the id of the user who creates this {@link Order}
      *
-     * @param orderType
-     * @param budget
+     * @param orderType order type (Grocery, DrugStore, ...)
+     * @param budget estimated cost of the order
      * @return the order ID
      */
     Optional<String> createOrder(List<OrderItem> orderedItems, Date latestDeliveryWished, String createdByUserId, String orderType, Float budget);
@@ -79,5 +79,7 @@ public interface OrderStorage {
     void updateAssignedToOfOrder(String orderId, String assignedToUserId);
 
     void updateEstimatedDeliveryAtOfOrder(String orderId, Date estimatedDelivery);
+
+    void deleteOrder(String orderId, String userId);
 
 }

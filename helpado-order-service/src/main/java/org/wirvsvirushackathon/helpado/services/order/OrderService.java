@@ -7,6 +7,7 @@ import org.wirvsvirushackathon.helpado.order.api.OrderItem;
 import org.wirvsvirushackathon.helpado.order.storage.OrderStorage;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateRequest;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateResponse;
+import org.wirvsvirushackathon.helpado.services.order.api.OrderDeleteRequest;
 import org.wirvsvirushackathon.helpado.session.SessionManager;
 
 import javax.ws.rs.*;
@@ -66,8 +67,8 @@ public class OrderService {
     @Path("/orders/{orderId}")
     public Response patchOrderAsCreator(@PathParam("orderId") String orderId, OrderCreateRequest orderPatchRequest) {
         String userId = orderPatchRequest.getUserId();
-        List<OrderItem> orderedItems = orderPatchRequest.getOrderedItems();
         String sessionToken = orderPatchRequest.getSessionToken();
+        List<OrderItem> orderedItems = orderPatchRequest.getOrderedItems();
         Date latestDeliveryWished = orderPatchRequest.getLatestDeliveryWished();
         String orderType = orderPatchRequest.getOrderType();
         Float budget = orderPatchRequest.getBudget();
@@ -106,5 +107,21 @@ public class OrderService {
         List<Order> allOrders = orderStorage.getAllOrders();
 
         return Response.status(Response.Status.OK).entity(allOrders).build();
+    }
+
+    @DELETE
+    @Path("/orders/{orderId}")
+    public Response deleteOrderAsCreator(@PathParam("orderId") String orderId, OrderDeleteRequest orderDeleteRequest) {
+        String userId = orderDeleteRequest.getUserId();
+        String sessionToken = orderDeleteRequest.getSessionToken();
+
+        if (!sessionManager.validateSessionToken(userId, sessionToken)) {
+            logger.warn("Unauthorized order patch request by user having id {}", userId);
+            throw new ForbiddenException();
+        }
+
+        orderStorage.deleteOrder(orderId, userId);
+
+        return Response.status(Response.Status.OK).build();
     }
 }

@@ -83,6 +83,12 @@ public class OrderStorageMockImpl implements OrderStorage {
 
     }
 
+    @Override
+    public void deleteOrder(String orderId, String userId) {
+        Order orderToBeDeleted = getOrderToBeChangedWithCreatorAuthorization(orderId, userId);
+        storedOrders.remove(orderToBeDeleted);
+    }
+
     private Order getOrderToBeChangedWithCreatorAuthorization(String orderId, String userId) {
         Optional<Order> orderToBeChanged = getOrderById(orderId);
 
