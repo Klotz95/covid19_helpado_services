@@ -5,7 +5,6 @@ import org.wirvsvirushackathon.helpado.user.api.User;
 import org.wirvsvirushackathon.helpado.user.api.UserAddress;
 import org.wirvsvirushackathon.helpado.user.api.ViewUser;
 
-import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -79,17 +78,14 @@ public interface UserStorage {
     /**
      * Creates a user
      *
-     * @param username of the new user
      * @param password of the new user
      * @param mailAddress of the new user
      * @param firstName of the new user
      * @param lastName of the new user
-     * @param description of the new user
-     * @param birthday of the new user
      * @param userAddress of the new user
      *
      * @return an {@link Optional} containing the userid if the creation was successful
      */
-     Optional<String> createUser(String username, String password, String mailAddress, String firstName, String lastName, String description, Date birthday,
+     Optional<String> createUser(String password, String mailAddress, String firstName, String lastName,
                                  UserAddress userAddress);
 }

@@ -90,20 +90,17 @@ public class UserStorageMockImpl implements UserStorage {
     }
 
     @Override
-    public Optional<String> createUser(String username, String password, String mailAddress, String firstName, String lastName, String description, Date birthday,
+    public Optional<String> createUser(String password, String mailAddress, String firstName, String lastName,
                                        UserAddress userAddress) {
         String uuid = UUID.randomUUID().toString();
 
         User newUser = new User();
-        newUser.setDescription(description);
         newUser.setUserAddress(userAddress);
         newUser.setPassword(password);
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
-        newUser.setBirthday(birthday);
         newUser.setMailAddress(mailAddress);
         newUser.setUserId(uuid);
-        newUser.setUsername(username);
 
         this.storedUsers.add(newUser);
         return Optional.of(uuid);
@@ -120,7 +117,8 @@ public class UserStorageMockImpl implements UserStorage {
         res.setLastName(user.getLastName());
         res.setFirstName(user.getFirstName());
         res.setUserId(user.getUserId());
-        res.setUsername(user.getUsername());
+        res.setMailAddress(user.getMailAddress());
+        res.setUserAddress(user.getUserAddress());
 
         return res;
     }

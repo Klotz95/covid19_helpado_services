@@ -22,7 +22,7 @@ public class UserCreateRequest {
     private static final String LASTNAME_PARAMETER_NAME = "lastName";
     private static final String DESCRIPTION_PARAMETER_NAME = "description";
     private static final String BIRTHDAY_PARAMETER_NAME = "birthday";
-    private static final String USER_ADDRESS_PARAMETER_NAME = "userAddress";
+    private static final String USER_ADDRESS_PARAMETER_NAME = "address";
 
     @JsonProperty(USERNAME_PARAMETER_NAME)
     private final String username;
@@ -75,6 +75,7 @@ public class UserCreateRequest {
     public String getFirstName() {
         return firstName;
     }
+
     public String getLastName() {
         return lastName;
     }

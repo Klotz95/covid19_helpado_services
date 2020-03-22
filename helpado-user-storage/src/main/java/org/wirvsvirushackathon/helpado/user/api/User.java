@@ -12,28 +12,21 @@ import java.util.Date;
 public class User {
 
     private String userId;
-    private String username;
     private String firstName;
     private String lastName;
     private String password;
     private String mailAddress;
-    private String description;
-    private Date birthday;
     private UserAddress userAddress;
 
     public User() {
     }
 
-    public User(String userId, String username, String password, String mailAddress, String firstName, String lastName, String description, Date birthday,
-                UserAddress userAddress) {
+    public User(String userId, String password, String mailAddress, String firstName, String lastName, UserAddress userAddress) {
         this.userId = userId;
-        this.username = username;
         this.password = password;
         this.mailAddress = mailAddress;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.description = description;
-        this.birthday = birthday;
         this.userAddress = userAddress;
     }
 
@@ -43,14 +36,6 @@ public class User {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -83,22 +68,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
     }
 
     public UserAddress getUserAddress() {
