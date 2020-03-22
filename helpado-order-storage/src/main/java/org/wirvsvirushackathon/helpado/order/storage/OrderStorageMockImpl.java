@@ -15,22 +15,21 @@ public class OrderStorageMockImpl implements OrderStorage {
     private final List<Order> storedOrders;
 
     public OrderStorageMockImpl() {
-        storedOrders = new ArrayList<>();
+        storedOrders = Collections.synchronizedList(new ArrayList<>());
     }
 
     @Override
-    public Optional<List<Order>> getAllOrders() {
-        return Optional.of(storedOrders);
+    public List<Order> getAllOrders() {
+        return storedOrders;
     }
 
     @Override
-    public Optional<String> createOrder(List<OrderItem> orderedItems, Boolean premiumProducts, Date latestDeliveryWished, String createdByUserId) {
+    public Optional<String> createOrder(List<OrderItem> orderedItems, Date latestDeliveryWished, String createdByUserId) {
         String uuid = UUID.randomUUID().toString();
 
         Order newOrder = new Order();
         newOrder.setOrderId(uuid);
         newOrder.setOrderedItems(orderedItems);
-        newOrder.setPremiumProducts(premiumProducts);
         newOrder.setLatestDeliveryWished(latestDeliveryWished);
         newOrder.setCreatedByUserId(createdByUserId);
         newOrder.setCreatedAt(new Date());
@@ -38,5 +37,40 @@ public class OrderStorageMockImpl implements OrderStorage {
 
         this.storedOrders.add(newOrder);
         return Optional.of(uuid);
+    }
+
+    @Override
+    public Optional<Order> getOrderById(String id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void updateLatestDeliveryWishedOfOrder(String orderId, Date latestDeliveryWished) {
+
+    }
+
+    @Override
+    public void updateDescriptionOfOrder(String orderId, String description) {
+
+    }
+
+    @Override
+    public void updateBudgetOfOrder(String orderId, float budget) {
+
+    }
+
+    @Override
+    public void updateItemListOfOrder(String orderId, List<OrderItem> orderItems) {
+
+    }
+
+    @Override
+    public void updateAssignedToOfOrder(String orderId, String assignedToUserId) {
+
+    }
+
+    @Override
+    public void updateEstimatedDeliveryAtOfOrder(String orderId, Date estimatedDelivery) {
+
     }
 }

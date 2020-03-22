@@ -1,6 +1,8 @@
 package org.wirvsvirushackathon.helpado.order.api;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Order {
     private static final String ASSIGNED_TO_USER_ID_PARAMETER_NAME = "assignedToUserId";
     private static final String BUDGET_PARAMETER_NAME = "budget";
     private static final String STATE_PARAMETER_NAME = "state";
+    private static final String DESCRIPTION_PARAMETER_NAME = "description";
 
     @JsonProperty(ORDER_ID_PARAMETER_NAME)
     private String orderId;
@@ -35,11 +38,23 @@ public class Order {
     private Float budget;
     @JsonProperty(STATE_PARAMETER_NAME)
     private OrderState state;
+    @JsonProperty(DESCRIPTION_PARAMETER_NAME)
+    private String description;
 
     public Order() {
     }
 
-    public Order(String orderId, List<OrderItem> orderedItems, Date latestDeliveryWished, Date estimatedDeliveryAt, Date createdAt, String createdByUserId, String assignedToUserId, Float budget, OrderState state) {
+    @JsonCreator
+    public Order(@JsonProperty(ORDER_ID_PARAMETER_NAME) String orderId,
+                 @JsonProperty(ORDERED_ITEMS_PARAMETER_NAME) List<OrderItem> orderedItems,
+                 @JsonProperty(LATEST_DELIVERY_WISHED_PARAMETER_NAME) Date latestDeliveryWished,
+                 @JsonProperty(ESTIMATED_DELIVERY_AT_PARAMETER_NAME) Date estimatedDeliveryAt,
+                 @JsonProperty(CREATED_AT_PARAMETER_NAME) Date createdAt,
+                 @JsonProperty(CREATED_BY_USER_ID_PARAMETER_NAME) String createdByUserId,
+                 @JsonProperty(ASSIGNED_TO_USER_ID_PARAMETER_NAME) String assignedToUserId,
+                 @JsonProperty(BUDGET_PARAMETER_NAME) Float budget,
+                 @JsonProperty(STATE_PARAMETER_NAME) OrderState state,
+                 @JsonProperty(DESCRIPTION_PARAMETER_NAME)String description) {
         this.orderId = orderId;
         this.orderedItems = orderedItems;
         this.latestDeliveryWished = latestDeliveryWished;
@@ -49,6 +64,7 @@ public class Order {
         this.assignedToUserId = assignedToUserId;
         this.budget = budget;
         this.state = state;
+        this.description = description;
     }
 
     public String getOrderId() {
@@ -123,5 +139,9 @@ public class Order {
 
     public void setState(OrderState state) {
         this.state = state;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
