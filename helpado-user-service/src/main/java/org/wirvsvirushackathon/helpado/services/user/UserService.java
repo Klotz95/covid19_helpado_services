@@ -42,7 +42,7 @@ public class UserService {
 
     @GET
     @Path("/users/{userId}")
-    public ViewUser getUserInformation(@PathParam("userId") String userId, @HeaderParam("sessionToken") String sessionToken) {
+    public ViewUser getUserInformation(@PathParam("userId") String userId, @HeaderParam("X-Session-Token") String sessionToken) {
         logger.debug("view-information of user having id {} has been requested", userId);
 
         if (!sessionManager.validateSessionToken(userId, sessionToken)) {
