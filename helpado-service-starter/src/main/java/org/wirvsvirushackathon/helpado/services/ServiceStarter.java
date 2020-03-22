@@ -48,7 +48,7 @@ public class ServiceStarter extends Application<ServiceConfiguration> {
         environment.jersey().register(userService);
 
         OrderStorage orderStorage = new OrderStorageMockImpl();
-        OrderService orderService = new OrderService(orderStorage);
+        OrderService orderService = new OrderService(orderStorage, sessionManager);
         environment.jersey().register(orderService);
     }
 

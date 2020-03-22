@@ -46,7 +46,6 @@ public class OrderService {
         if (sessionManager.validateSessionToken(orderCreateRequest.getUserId(), orderCreateRequest.getSessionToken())) {
             Optional<String> createdOrderId = orderStorage.createOrder(
                     orderCreateRequest.getOrderedItems(),
-                    orderCreateRequest.getPremiumProducts(),
                     orderCreateRequest.getLatestDeliveryWished(),
                     orderCreateRequest.getUserId()
             );
@@ -67,12 +66,8 @@ public class OrderService {
     public Response getAllOrders() {
         logger.info("A list of all orders are requested");
 
-        Optional<List<Order>> allOrders = orderStorage.getAllOrders();
+        List<Order> allOrders = orderStorage.getAllOrders();
 
-        if (allOrders.isPresent()) {
-            return Response.status(Response.Status.OK).entity(allOrders.get()).build();
-        } else {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
+        return Response.status(Response.Status.OK).entity(allOrders).build();
     }
 }

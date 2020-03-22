@@ -64,7 +64,7 @@ public class UserStorageMockImpl implements UserStorage {
 
     @Override
     public void changeUserAddress(String userId, UserAddress userAddress) {
-        logger.debug("Changing address of user having id {}",userId);
+        logger.debug("Changing address of user having id {}", userId);
 
         this.getUser(userId).ifPresentOrElse(user -> user.setUserAddress(userAddress), () -> {
             throw new UserNotFoundException(userId);
@@ -92,21 +92,21 @@ public class UserStorageMockImpl implements UserStorage {
     @Override
     public Optional<String> createUser(String username, String password, String mailAddress, String firstName, String lastName, String description, Date birthday,
                                        UserAddress userAddress) {
-       String uuid = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString();
 
-       User newUser = new User();
-       newUser.setDescription(description);
-       newUser.setUserAddress(userAddress);
-       newUser.setPassword(password);
-       newUser.setFirstName(firstName);
-       newUser.setLastName(lastName);
-       newUser.setBirthday(birthday);
-       newUser.setMailAddress(mailAddress);
-       newUser.setUserId(uuid);
-       newUser.setUsername(username);
+        User newUser = new User();
+        newUser.setDescription(description);
+        newUser.setUserAddress(userAddress);
+        newUser.setPassword(password);
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setBirthday(birthday);
+        newUser.setMailAddress(mailAddress);
+        newUser.setUserId(uuid);
+        newUser.setUsername(username);
 
-       this.storedUsers.add(newUser);
-       return Optional.of(uuid);
+        this.storedUsers.add(newUser);
+        return Optional.of(uuid);
     }
 
     /**
