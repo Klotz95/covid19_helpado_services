@@ -40,30 +40,21 @@ public class Order {
     @JsonProperty(STATE_PARAMETER_NAME)
     private OrderState state;
 
-    public Order() {
-    }
+    @JsonCreator
+    public Order() {}
 
     @JsonCreator
-    public Order(@JsonProperty(ORDER_ID_PARAMETER_NAME) String orderId,
-                 @JsonProperty(ORDERED_ITEMS_PARAMETER_NAME) List<OrderItem> orderedItems,
-                 @JsonProperty(ORDER_TYPE_PARAMETER_NAME) String orderType,
-                 @JsonProperty(LATEST_DELIVERY_WISHED_PARAMETER_NAME) Date latestDeliveryWished,
-                 @JsonProperty(ESTIMATED_DELIVERY_AT_PARAMETER_NAME) Date estimatedDeliveryAt,
-                 @JsonProperty(CREATED_AT_PARAMETER_NAME) Date createdAt,
-                 @JsonProperty(CREATED_BY_USER_ID_PARAMETER_NAME) String createdByUserId,
-                 @JsonProperty(ASSIGNED_TO_USER_ID_PARAMETER_NAME) String assignedToUserId,
-                 @JsonProperty(BUDGET_PARAMETER_NAME) Float budget,
-                 @JsonProperty(STATE_PARAMETER_NAME) OrderState state) {
-        this.orderId = orderId;
-        this.orderedItems = orderedItems;
-        this.orderType = orderType;
-        this.latestDeliveryWished = latestDeliveryWished;
-        this.estimatedDeliveryAt = estimatedDeliveryAt;
-        this.createdAt = createdAt;
-        this.createdByUserId = createdByUserId;
-        this.assignedToUserId = assignedToUserId;
-        this.budget = budget;
-        this.state = state;
+    public Order(Order oldOrder) {
+        this.orderId = oldOrder.orderId;
+        this.orderedItems = oldOrder.orderedItems;
+        this.orderType = oldOrder.orderType;
+        this.latestDeliveryWished = oldOrder.latestDeliveryWished;
+        this.estimatedDeliveryAt = oldOrder.estimatedDeliveryAt;
+        this.createdAt = oldOrder.createdAt;
+        this.createdByUserId = oldOrder.createdByUserId;
+        this.assignedToUserId = oldOrder.assignedToUserId;
+        this.budget = oldOrder.budget;
+        this.state = oldOrder.state;
     }
 
     public String getOrderId() {

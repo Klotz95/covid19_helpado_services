@@ -58,8 +58,8 @@ public class UserService {
     public Response createUser(UserCreateRequest createRequest) {
         logger.info("The creation of a user for email address {} has been requested", createRequest.getMailAddress());
 
-        Optional<String> createdUserId = userStorage.createUser(createRequest.getMailAddress(), createRequest.getPassword(),
-                createRequest.getMailAddress(), createRequest.getFirstName(), createRequest.getLastName() , createRequest.getDescription(), createRequest.getBirthday(), createRequest.getUserAddress());
+        Optional<String> createdUserId = userStorage.createUser(createRequest.getPassword(),
+                createRequest.getMailAddress(), createRequest.getFirstName(), createRequest.getLastName() , createRequest.getUserAddress());
 
         if (createdUserId.isPresent()) {
             UserCreateResponse userCreateResponse = new UserCreateResponse(createdUserId.get());

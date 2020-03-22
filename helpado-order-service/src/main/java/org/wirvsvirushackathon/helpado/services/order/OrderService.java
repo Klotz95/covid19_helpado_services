@@ -8,7 +8,9 @@ import org.wirvsvirushackathon.helpado.order.storage.OrderStorage;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateRequest;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderCreateResponse;
 import org.wirvsvirushackathon.helpado.services.order.api.OrderDeleteRequest;
+import org.wirvsvirushackathon.helpado.services.order.api.OrderWithAddress;
 import org.wirvsvirushackathon.helpado.session.SessionManager;
+import org.wirvsvirushackathon.helpado.user.storage.UserStorage;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,6 +18,7 @@ import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Path("/order-service/v1")
 @Produces(MediaType.APPLICATION_JSON)
@@ -24,11 +27,13 @@ public class OrderService {
 
     private final OrderStorage orderStorage;
     private final SessionManager sessionManager;
+    private final UserStorage userStorage;
 
-    public OrderService(OrderStorage orderStorage, SessionManager sessionManager) {
+    public OrderService(OrderStorage orderStorage, SessionManager sessionManager, UserStorage userStorage) {
         logger.info("Constructing OrderService with storage type {} ", orderStorage.getClass());
         this.orderStorage = orderStorage;
         this.sessionManager = sessionManager;
+        this.userStorage = userStorage;
     }
 
     /**
@@ -106,7 +111,15 @@ public class OrderService {
 
         List<Order> allOrders = orderStorage.getAllOrders();
 
-        return Response.status(Response.Status.OK).entity(allOrders).build();
+        List<OrderWithAddress> allOrdersWithAddress = allOrders.stream().map(this::addAddressToOrder).collect(Collectors.toList());
+
+        return Response.status(Response.Status.OK).entity(allOrdersWithAddress).build();
+    }
+
+    private OrderWithAddress addAddressToOrder(Order order) {
+        return this.userStorage.getUser(order.getCreatedByUserId())
+                .map(user -> new OrderWithAddress(order, user.getUserAddress()))
+                .orElseGet(() -> new OrderWithAddress(order, null));
     }
 
     @DELETE
